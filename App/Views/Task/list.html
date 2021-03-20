@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+
+<div class="container tasklist">
+		<div id="actionsblock">
+			<h2 class="title "> Task List </h2>
+
+			<div>
+				<a class="btn btn-primary" href="add">Add new Task</a>
+			
+				{% if is_admin %}
+					<a class="btn btn-primary" href="logout">logout</a>
+				{% else %}
+					<a class="btn btn-primary" href="login">login</a>
+				{% endif %}
+			</div>
+		</div>
+		<table
+				id="table"
+				data-toggle="table"
+				class="table table-bordered table-hover"
+			>
+			<thead>
+			<tr class="tableHeader">
+				<th data-field="id" data-halign="right" data-align="center">
+					<a href="{% if order_by=='user_name' %}{% if desc==0 %}?page={{currentPage}}&order_by=user_name&desc=1{% else %}?page={{currentPage}}&order_by=user_name&desc=0{% endif %}{% else %}?page={{currentPage}}&order_by=user_name&desc={{desc}}{% endif %}">
+						User name
+						{% if order_by=='user_name' %}
+							{% if desc==0 %}
+								▽
+							{% else %}
+								△
+							{% endif %}
+
+						{% endif %}
+					</a>
+				</th>
+				<th data-field="title" data-halign="center" data-align="left">
+					<a href="{% if order_by=='email' %}{% if desc==0 %}?page={{currentPage}}&order_by=email&desc=1{% else %}?page={{currentPage}}&order_by=email&desc=0{% endif %}{% else %}?page={{currentPage}}&order_by=email&desc={{desc}}{% endif %}">
+					Email
+					{% if order_by=='email' %}
+							{% if desc==0 %}
+								▽
+							{% else %}
+								△
+							{% endif %}
+
+						{% endif %}
+					</a>
+				</th>
+				<th data-field="body" data-halign="left" data-align="right">
+					Task
+				</th>
+				<th>
+					<a href="{% if order_by=='done' %}{% if desc==0 %}?page={{currentPage}}&order_by=done&desc=1{% else %}?page={{currentPage}}&order_by=done&desc=0{% endif %}{% else %}?page={{currentPage}}&order_by=done&desc={{desc}}{% endif %}">
+						Status
+						{% if order_by=='done' %}
+							{% if desc==0 %}
+								▽
+							{% else %}
+								△
+							{% endif %}
+
+						{% endif %}
+					</a>
+				</th>
+				<th>Edit</th>
+
+			</tr>
+			</thead>
+			<tbody>
+			{% for task in tasks %}
+				<tr>
+					<td href="?page={{currentPage-1}}?order_by={{order_by}}?desc={{desc}}">{{task.user_name}}</td>
+					<td>{{task.email}}</td>
+					<td class="taskscolumn">{{task.task}}</td>
+					<td>
+						{% if task.done %}
+							done
+						{% else %}
+							not done
+							{% if is_admin %}
+								<a href="done?id={{task.id}}">set done</a>
+							{% endif %}
+
+						{% endif %}
+					</td>
+						<td>
+						{% if task.edited %}
+							edited
+						{% else %}
+							dont edited
+						{% endif %}
+						{% if is_admin %}
+							<a href="edit?id={{task.id}}">edit</a>
+						{% endif %}
+
+						</td>
+
+				</tr>
+
+			{% endfor %}
+			</tbody>
+		</table>
+		<div class="float-left pagination-detail">
+			<span class="pagination-info">
+				Showing {{start_number}} to {{end_number}} of {{count}} rows
+			</span>
+		</div>
+		<div class="float-right pagination">
+			<ul class="pagination">
+				{% if currentPage>1 %}
+					<li class="page-item page-pre">
+						<a class="page-link" aria-label="previous page" href="?page={{currentPage-1}}&order_by={{order_by}}&desc={{desc}}">‹</a>
+					</li>
+				{% endif %}
+
+				{% for i in 1..nbPages %}
+					{% if 0 == (currentPage - nearbyPagesLimit) - loop.index %} {# dot before #}
+						<li class="page-item disabled"><a class="page-link" a href="#">...</a></li>
+					{% elseif 0 == (currentPage + nearbyPagesLimit) - loop.index %} {# dot after #}
+						<li class="page-item disabled"><a class="page-link" a href="#">...</a></li>
+					
+					{% elseif 0 > (currentPage - nearbyPagesLimit) - loop.index and 0 < (currentPage + nearbyPagesLimit) - loop.index %}
+						<li class="page-item{% if currentPage == loop.index  %}  active{% endif %}">
+							<a class="page-link" href="?page={{loop.index}}&order_by={{order_by}}&desc={{desc}}">{{ loop.index }}</a>
+						</li>
+					{% endif %}
+				{% endfor %}
+				{% if  currentPage < nbPages %}
+				<li class="page-item page-next">
+					<a class="page-link" aria-label="next page" href="?page={{currentPage+1}}{% if order_by is defined %}?order_by={{order_by}}{% endif %}{% if desc is defined %}?desc={{desc}}{% endif %}">›</a>
+				</li>
+				{% endif %}
+
+			</ul>
+		</div>
+		</div>
+
+{% endblock %}

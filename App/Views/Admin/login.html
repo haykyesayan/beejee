@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+
+
+<div id="login" class="container">
+  {{error_message}}
+  <div class="row-fluid">
+    <div class="span12">
+      <div class="login well well-small">
+        <form action="" style="" class="login-form" id="UserLoginForm" method="post" accept-charset="utf-8">
+          <input type="hidden" name="submited">
+            <input type="hidden" name="refferer" value="{{referer}}">
+          <div class="control-group ">
+            <div class="input-prepend">
+              <input name="login" class="col-md-12" required="required" placeholder="Username" maxlength="255" type="text" id="UserUsername">
+            </div>
+          </div>
+          <div class="control-group ">
+            <div class="input-prepend" >
+              <input name="password" class="col-md-12" required="required" placeholder="Password" type="password" id="UserPassword">
+            </div>
+          </div>
+          <div class="control-group">
+            <a class="btn btn-primary btn-large btn-block" href="{{referer}}">Back</a>
+
+            <input class="btn btn-primary btn-large btn-block btn-success" type="submit" value="Sign in">
+          </div>
+        </form>
+      </div><!--/.login-->
+    </div><!--/.span12-->
+  </div><!--/.row-fluid-->
+</div>
+
+{% endblock %}

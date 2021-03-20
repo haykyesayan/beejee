@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+
+<div class="container">
+        <h2 class="title"> Edit Task </h2>
+        {{message}}
+        <ul class="list-group">
+            <li class="list-group-item mt-2 ">{{user_name}} </li>
+            <li class="list-group-item mt-2 ">{{email}} </li>
+        </ul>
+        <form method="POST">
+            <input type="hidden" name="submited">
+            <input type="hidden" name="referer" value="{{referer}}">
+
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Task *</label>
+                <textarea class="form-control" name="task" id="exampleFormControlTextarea1" placeholder="description"
+                    rows="3">{{task}}</textarea>
+            </div>
+            <a class="btn btn-primary" href="{{referer}}">Back</a>
+
+            <input type="submit" class="btn btn-success" value="Send"/>
+        </form>
+    </div>
+
+{% endblock %}

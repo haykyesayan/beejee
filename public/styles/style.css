@@ -1,0 +1,43 @@
+.col-custom {
+    margin-top: 30px;
+}
+
+.title {
+    text-align: center;
+    font-size: 24px;
+    text-transform: uppercase;
+    color: grey;
+}
+
+.list-group {
+    margin-bottom: 20px;
+}
+
+.list-group-item+.list-group-item {
+    border: 1px solid rgba(0,0,0,.125)  !important;
+}
+.control-group{
+	margin-top: 20px;
+}
+.tasklist{
+	margin-top: 40px;
+}
+#table{
+	margin-top: 40px;
+
+}
+#actionsblock{
+
+    display: flex;
+    justify-content: space-between;
+
+}
+.taskscolumn{
+    max-width: 1px;
+    word-wrap: break-word;
+    overflow-wrap : break-word;
+    width: 100%;
+}
+.tableHeader>th{
+	text-align: center;
+}
